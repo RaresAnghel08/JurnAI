@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JurnAI – Jurnalul tău cu AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+  <div class="max-w-3xl mx-auto p-6">
+    <h1 class="text-4xl font-bold text-center text-blue-600 mb-2">📔 JurnAI</h1>
+    <p class="text-center text-gray-600 mb-8">Compilăm idei. Optimizăm viitorul.</p>
+
+    <form id="journalForm" class="space-y-4">
+      <label for="journalText" class="block text-lg font-medium">✍️ Scrie despre ziua ta:</label>
+      <textarea id="journalText" rows="6" class="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200" placeholder="Ex: Azi am avut test, m-am simțit obosit..."></textarea>
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all">🔍 Analizează</button>
+    </form>
+
+    <div id="resultContainer" class="mt-8 hidden">
+      <h2 class="text-2xl font-semibold mb-2">🔎 Analiza AI:</h2>
+      <pre id="resultText" class="bg-white p-4 rounded-md border border-gray-300 whitespace-pre-wrap"></pre>
+    </div>
+
+    <footer class="mt-10 text-center text-sm text-gray-400">
+      Creat cu ❤️ pentru Infoeducație 2025. Sponsor: Viva Credit.
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById("journalForm");
+    const textArea = document.getElementById("journalText");
+    const resultBox = document.getElementById("resultContainer");
+    const resultText = document.getElementById("resultText");
+
+    const API_URL = "https://jurnai-api.onrender.com/analyze"; // 🔁 înlocuiește cu URL-ul backendului tău
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const userText = textArea.value.trim();
+      if (userText.length < 10) {
+        alert("Te rugăm să scrii ceva mai detaliat 🙂");
+        return;
+      }
+
+      resultText.textContent = "Se analizează... ⏳";
+      resultBox.classList.remove("hidden");
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: userText })
+        });
+
+        const data = await response.json();
+        if (data.result) {
+          resultText.textContent = data.result;
+        } else {
+          resultText.textContent = "Eroare: " + (data.error || "răspuns invalid");
+        }
+      } catch (err) {
+        resultText.textContent = "Eroare de rețea sau server. Încearcă mai târziu.";
+      }
+    });
+  </script>
+</body>
+</html>
