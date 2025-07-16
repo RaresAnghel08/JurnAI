@@ -1,18 +1,18 @@
 # main.py
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import openai
 import os
+import openai
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
 
-# CORS – permite accesul frontendului de pe alt domeniu (ex: Vercel)
+# Activăm CORS pentru frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # sau specific: ["https://jurnai.vercel.app"]
+    allow_origins=["*"],  # sau ["https://jurnai.vercel.app"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,12 +36,12 @@ Scrie fiecare punct clar, cu titlu:
 """
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
-        content = response.choices[0].message["content"]
-        return {"result": content}
+        result_text = response.choices[0].message.content
+        return {"result": result_text}
     except Exception as e:
         return {"error": str(e)}
