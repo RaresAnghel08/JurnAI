@@ -1,0 +1,9 @@
+/* Stiluri personalizate JurnAI */
+
+body {
+    transition: background 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+}
