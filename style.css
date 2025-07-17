@@ -89,3 +89,20 @@ footer {
 .hidden {
   display: none;
 }
+
+#historyContainer {
+  margin-top: 40px;
+}
+
+#historyList {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+#historyList li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  background-color: #f0f4f8;
+  padding: 10px;
+  border-radius: 6px;
+}

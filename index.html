@@ -23,7 +23,24 @@
       <h2>🔎 Analiza AI:</h2>
       <pre id="resultText"></pre>
     </div>
+    <form id="journalForm">
+      <label for="journalText">✍️ Scrie despre ziua ta:</label>
+      <textarea id="journalText" placeholder="Ex: Azi am avut test, m-am simțit obosit..."></textarea>
+      <button type="submit">🔍 Analizează</button>
+    </form>
 
+    <div id="resultContainer" class="hidden">
+      <h2>🔎 Analiza AI:</h2>
+      <p><strong>🧠 Emoție dominantă:</strong> <span id="emotion"></span></p>
+      <p><strong>🧩 Temă detectată:</strong> <span id="theme"></span></p>
+      <p><strong>🎯 Recomandare:</strong> <span id="advice"></span></p>
+      <pre id="resultText"></pre>
+    </div>
+
+    <div id="historyContainer">
+      <h3>📚 Jurnalele tale salvate:</h3>
+      <ul id="historyList"></ul>
+    </div>
     <footer>
       Creat cu ❤️ pentru Infoeducație 2025. Sponsor: Viva Credit.
     </footer>
